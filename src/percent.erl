@@ -33,7 +33,7 @@ uri_encode([X | T], Acc) when ?is_alphanum(X); X =:= $-; X =:= $_; X =:= $.; X =
   uri_encode(T, [X | Acc]);
 uri_encode([X | T], Acc) ->
   NewAcc = [$%, hexchr(X bsr 4), hexchr(X band 16#0f) | Acc],
-  url_encode(T, NewAcc);
+  uri_encode(T, NewAcc);
 uri_encode([], Acc) ->
   Acc.
 
