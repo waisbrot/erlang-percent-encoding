@@ -9,7 +9,7 @@
 %% content type (http://www.w3.org/TR/html4/interact/forms.html#h-17.13.4.1).
 %%
 
-url_encode(Str) when list(Str) ->
+url_encode(Str) when is_list(Str) ->
   url_encode(lists:reverse(Str, []), []).
 
 url_encode([X | T], Acc) when ?is_alphanum(X); X =:= $-; X =:= $_; X =:= $. ->
@@ -26,7 +26,7 @@ url_encode([], Acc) ->
 %% Percent encoding as defined by RFC 3986 (http://tools.ietf.org/html/rfc3986).
 %%
 
-uri_encode(Str) when list(Str) ->
+uri_encode(Str) when is_list(Str) ->
   uri_encode(lists:reverse(Str, []), []).
 
 uri_encode([X | T], Acc) when ?is_alphanum(X); X =:= $-; X =:= $_; X =:= $.; X =:= $~ ->
