@@ -66,6 +66,8 @@ hexchr_encode(N) when N >= 10 ->
 hexchr_encode(N) when N < 10 ->
   N + $0.
 
+hexchr_decode(C) when C >= $a ->
+  C - $a + 10;
 hexchr_decode(C) when C >= $A ->
   C - $A + 10;
 hexchr_decode(C)->
