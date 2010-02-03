@@ -17,7 +17,7 @@ url_encode([X | T], Acc) when ?is_alphanum(X); X =:= $-; X =:= $_; X =:= $. ->
 url_encode([32 | T], Acc) ->
   url_encode(T, [$+ | Acc]);
 url_encode([X | T], Acc) ->
-  NewAcc = [$%, hexchr(X bsr 4), hexchr(X band 16#0f) | Acc],
+  NewAcc = [$%, hexchr_encode(X bsr 4), hexchr_encode(X band 16#0f) | Acc],
   url_encode(T, NewAcc);
 url_encode([], Acc) ->
   Acc.
@@ -32,7 +32,7 @@ uri_encode(Str) when is_list(Str) ->
 uri_encode([X | T], Acc) when ?is_alphanum(X); X =:= $-; X =:= $_; X =:= $.; X =:= $~ ->
   uri_encode(T, [X | Acc]);
 uri_encode([X | T], Acc) ->
-  NewAcc = [$%, hexchr(X bsr 4), hexchr(X band 16#0f) | Acc],
+  NewAcc = [$%, hexchr_encode(X bsr 4), hexchr_encode(X band 16#0f) | Acc],
   uri_encode(T, NewAcc);
 uri_encode([], Acc) ->
   Acc.
@@ -59,11 +59,11 @@ url_decode([], Acc) ->
 %% Helper functions.
 %%
 
--compile({inline, [{hexchr, 1}, {hexchr_decode, 1}]}).
+-compile({inline, [{hexchr_encode, 1}, {hexchr_decode, 1}]}).
 
-hexchr(N) when N >= 10 ->
+hexchr_encode(N) when N >= 10 ->
   N + $A - 10;
-hexchr(N) when N < 10 ->
+hexchr_encode(N) when N < 10 ->
   N + $0.
 
 hexchr_decode(C) when C >= $A ->
