@@ -4,9 +4,11 @@
 
 
 test() ->
-  % These fail both sets of test cases:
+  % These fail:
   test(yaws_api, url_encode, form_urlencoded_test_cases()),
+  test(yaws_api, url_encode, rfc3986_test_cases()),
   test(mochiweb_util, quote_plus, form_urlencoded_test_cases()),
+  test(mochiweb_util, quote_plus, rfc3986_test_cases()),
   % These pass:
   test(ibrowse_lib, url_encode, form_urlencoded_test_cases()),
   test(percent, url_encode, form_urlencoded_test_cases()),
