@@ -61,14 +61,14 @@ url_decode([], Acc) ->
 
 -compile({inline, [{hexchr_encode, 1}, {hexchr_decode, 1}]}).
 
-hexchr_encode(N) when N >= 10 ->
+hexchr_encode(N) when N >= 10 andalso N < 16 ->
   N + $A - 10;
-hexchr_encode(N) when N < 10 ->
+hexchr_encode(N) when N >= 0 andalso N < 10 ->
   N + $0.
 
-hexchr_decode(C) when C >= $a ->
+hexchr_decode(C) when C >= $a andalso C =< $f ->
   C - $a + 10;
-hexchr_decode(C) when C >= $A ->
+hexchr_decode(C) when C >= $A andalso C =< $F ->
   C - $A + 10;
-hexchr_decode(C)->
+hexchr_decode(C) when C >= $0 andalso C =< $9 ->
   C - $0.
