@@ -28,9 +28,10 @@ test(M, F, {Out, In}) ->
   end.
 
 test_decode() ->
-  lists:foreach(fun({In, Out}) -> Out = percent:uri_decode(In) end, test_cases([
-    {"foo%2fbar", "foo/bar"}
-  ])).
+  "foo/bar" = percent:uri_decode("foo%2fbar"), % lowercase hex
+  lists:foreach(fun({E, D}) -> test(percent, url_decode, {D, E}) end, form_urlencoded_test_cases()),
+  lists:foreach(fun({E, D}) -> test(percent, uri_decode, {D, E}) end, rfc3986_test_cases()),
+  ok.
 
 downcased_hex(Str) when is_list(Str) ->
   [downcased_hex(Chr) || Chr <- Str];
