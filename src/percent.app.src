@@ -1,0 +1,8 @@
+%% -*- mode: erlang -*-
+{application, percent,
+ [{description, "support for encoding and decoding RFC 1738 and RFC 3986"},
+  {vsn, "0.1.0"},
+  {modules, [ ]},
+  {applications, [kernel, stdlib]},
+  {registered, []}
+ ]}.
