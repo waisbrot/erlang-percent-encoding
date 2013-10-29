@@ -1,8 +1,26 @@
 -module(percent).
 
 -export([url_encode/1, url_decode/1, uri_encode/1, uri_decode/1]).
+-export([pairs_encode/1]).
 
 -define(is_alphanum(C), C >= $A, C =< $Z; C >= $a, C =< $z; C >= $0, C =< $9).
+
+%%
+%% Convenience wrapper around url_encode: given a list of key-value tuples,
+%% encode the keys and values and write them out as "key1=value1&key2=value2&..."
+%%
+pairs_encode(PairList) ->
+    pairs_encode(PairList, []).
+
+pairs_encode([], Acc) ->
+    Acc;
+pairs_encode([KVPair|Tail], []) ->
+    pairs_encode(Tail, pair_encode(KVPair));
+pairs_encode([KVPair|Tail], Acc) ->
+    pairs_encode(Tail, Acc ++ "&" ++ pair_encode(KVPair)).
+
+pair_encode({Key,Value}) ->
+    url_encode(Key) ++ "=" ++ url_encode(Value).
 
 %%
 %% Percent encoding/decoding as defined by the application/x-www-form-urlencoded
